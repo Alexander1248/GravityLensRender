@@ -16,9 +16,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.aparapi</groupId>
-            <artifactId>aparapi</artifactId>
-            <version>3.0.0</version>
+            <groupId>org.jcuda</groupId>
+            <artifactId>jcuda</artifactId>
+            <version>11.8.0</version>
         </dependency>
         <dependency>
             <groupId>org.jcodec</groupId>

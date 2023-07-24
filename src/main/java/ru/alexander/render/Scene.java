@@ -4,84 +4,66 @@ import java.awt.*;
 import java.lang.reflect.Array;
 
 public class Scene {
-    private double[] data;
-    private int[] color;
+    private float[] data;
     private int length;
     private boolean extended;
 
     public Scene() {
         int base = 8;
-        data = new double[base * 8];
-        color = new int[base * 3];
+        data = new float[base * 11];
         extended = true;
 
         length = 0;
     }
 
-    public void addObject(double x, double y, double z, double radius, double mass, Color color, double luminosity, double diffusion, double specular) {
-        if (data.length / 8 == length) {
-            double[] dataBuff = new double[data.length * 2];
+    public void addObject(float x, float y, float z, float radius, float mass, Color color, float luminosity, float diffusion, float specular) {
+        if (data.length / 11 == length) {
+            float[] dataBuff = new float[data.length * 2];
             System.arraycopy(data, 0, dataBuff, 0, data.length);
             data = dataBuff;
 
-            int[] colBuff = new int[this.color.length * 2];
-            System.arraycopy(this.color, 0, colBuff, 0, this.color.length);
-            this.color = colBuff;
-
             extended = true;
         }
-        data[length * 8] = x;
-        data[length * 8 + 1] = y;
-        data[length * 8 + 2] = z;
-        data[length * 8 + 3] = mass;
-        data[length * 8 + 4] = radius;
-        data[length * 8 + 5] = luminosity;
-        data[length * 8 + 6] = diffusion;
-        data[length * 8 + 7] = specular;
+        data[length * 11] = x;
+        data[length * 11 + 1] = y;
+        data[length * 11 + 2] = z;
+        data[length * 11 + 3] = mass;
+        data[length * 11 + 4] = radius;
 
-        this.color[length * 3] = color.getBlue();
-        this.color[length * 3 + 1] = color.getGreen();
-        this.color[length * 3 + 2] = color.getRed();
+        data[length * 11 + 5] = (float) color.getRed() / 255;
+        data[length * 11 + 6] = (float) color.getGreen() / 255;
+        data[length * 11 + 7] = (float) color.getBlue() / 255;
+        data[length * 11 + 8] = luminosity;
+        data[length * 11 + 9] = diffusion;
+        data[length * 11 + 10] = specular;
 
         length++;
     }
     public void removeObject(int index) {
         if (index < length) {
             length--;
-            swapData(index * 8, length * 8);
-            swapData(index * 8 + 1, length * 8 + 1);
-            swapData(index * 8 + 2, length * 8 + 2);
-            swapData(index * 8 + 3, length * 8 + 3);
-            swapData(index * 8 + 4, length * 8 + 4);
-            swapData(index * 8 + 5, length * 8 + 5);
-            swapData(index * 8 + 6, length * 8 + 6);
-            swapData(index * 8 + 7, length * 8 + 7);
-
-
-            swapColor(index * 3, length * 3);
-            swapColor(index * 3 + 1, length * 3 + 1);
-            swapColor(index * 3 + 2, length * 3 + 2);
+            swapData(index * 11, length * 11);
+            swapData(index * 11 + 1, length * 11 + 1);
+            swapData(index * 11 + 2, length * 11 + 2);
+            swapData(index * 11 + 3, length * 11 + 3);
+            swapData(index * 11 + 4, length * 11 + 4);
+            swapData(index * 11 + 5, length * 11 + 5);
+            swapData(index * 11 + 6, length * 11 + 6);
+            swapData(index * 11 + 7, length * 11 + 7);
+            swapData(index * 11 + 8, length * 11 + 8);
+            swapData(index * 11 + 9, length * 11 + 9);
+            swapData(index * 11 + 10, length * 11 + 10);
         }
     }
 
     private void swapData(int i1, int i2) {
-        double buff = data[i1];
+        float buff = data[i1];
         data[i1] = data[i2];
         data[i2] = buff;
     }
 
-    private void swapColor(int i1, int i2) {
-        int buff = color[i1];
-        color[i1] = color[i2];
-        color[i2] = buff;
-    }
-
-    public double[] getData() {
+    public float[] getData() {
         return data;
-    }
-
-    public int[] getColor() {
-        return color;
     }
 
     public int getLength() {
